@@ -1,0 +1,8 @@
+- hosts: all
+  vars:
+    ansible_user: "username"
+    ansible_host: "{{ lookup('cred_d42', '{{inventory_hostname}}', 'host') }}"
+    ansible_ssh_pass: "{{ lookup('cred_d42', '{{inventory_hostname}}', 'password', '{{ansible_user}}') }}"
+  tasks:
+    - shell: wget https://mirrors.kernel.org/ubuntu/pool/universe/c/check-mk/check-mk-agent_1.2.6p12-1_amd64.deb
+    - shell: sudo apt install ./check-mk-agent_1.2.6p12-1_amd64.deb
