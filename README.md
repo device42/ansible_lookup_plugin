@@ -36,3 +36,7 @@ device_name and username need to be filled in
 To get ip address call: lookup('cred_d42', 'device_name', 'host') 
 ```
 device_name needs to be filled in
+```
+To get netports call: lookup('cred_d42', 'device_name', 'netports') 
+```
+device_name needs to be filled in
