@@ -14,6 +14,7 @@ Please set system environment variables:
 D42_USER = 'device42 user'
 D42_PWD = 'device42 password'
 D42_URL = 'https:// device42 server IP address'
+D42_SKIP_SSL_CHECK = False
 ```
 
 ```

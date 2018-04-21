@@ -2,6 +2,9 @@ from ansible.errors import AnsibleError
 from ansible.plugins.lookup import LookupBase
 import json, requests, imp, sys, csv, StringIO, os
 
+if os.environ['D42_SKIP_SSL_CHECK']:
+    requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
 try:
     from __main__ import display
 except ImportError:
