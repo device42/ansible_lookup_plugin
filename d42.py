@@ -72,8 +72,6 @@ class LookupModule(LookupBase):
 
         if resp.status_code != 200:
             raise AnsibleError("API Call failed with status code: " + resp.status_code)
-        if not resp.text:
-            pass
 
         if output_type == 'string':
             return [resp.text,]
