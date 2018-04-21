@@ -1,7 +1,7 @@
 - hosts:                  all
   vars:
     ansible_user:         "login"
-    ansible_host:         "{{ lookup('d42', 'SELECT ip_address FROM view_ipaddress_v1 WHERE device_fk = ( SELECT device_pk FROM view_device_v1 WHERE name = @{{inventory_hostname}}@ )', 'doql', False) }}"
+    ansible_host:         "{{ lookup('d42', 'SELECT ip_address FROM view_ipaddress_v1 WHERE device_fk = ( SELECT device_pk FROM view_device_v1 WHERE name = @{{inventory_hostname}}@ )', 'doql', 'string') }}"
     ansible_ssh_pass:     "{{ lookup('d42', '{{inventory_hostname}}', 'password', '{{ansible_user}}') }}"
     netports:
       port:               "{{ item.port }}"
@@ -13,4 +13,4 @@
       remote_device_name: "{{ item.remote_device_name }}"
   tasks:
     - shell:              echo "{{netports.port}}"
-      with_items:         "{{ lookup('d42', 'SELECT n.port, n.hwaddress, n.port_type, n.port_speed, r.port as remote_port, v.name as primary_vlan_name, d.name as remote_device_name FROM view_netport_v1 n LEFT JOIN view_netport_v1 r ON n.remote_netport_fk = r.netport_pk LEFT JOIN view_vlan_v1 v ON n.primary_vlan_fk = v.vlan_pk LEFT JOIN view_device_v1 d ON r.device_fk = d.device_pk WHERE n.device_fk = (SELECT device_pk FROM view_device_v1 WHERE name = @{{inventory_hostname}}@ )', 'doql', True, wantlist=True) }}"
+      with_items:         "{{ lookup('d42', 'SELECT n.port, n.hwaddress, n.port_type, n.port_speed, r.port as remote_port, v.name as primary_vlan_name, d.name as remote_device_name FROM view_netport_v1 n LEFT JOIN view_netport_v1 r ON n.remote_netport_fk = r.netport_pk LEFT JOIN view_vlan_v1 v ON n.primary_vlan_fk = v.vlan_pk LEFT JOIN view_device_v1 d ON r.device_fk = d.device_pk WHERE n.device_fk = (SELECT device_pk FROM view_device_v1 WHERE name = @{{inventory_hostname}}@ )', 'doql', 'list_dicts') }}"

@@ -14,12 +14,12 @@ class LookupModule(LookupBase):
     @staticmethod
     def get_list_from_csv(text):
         f = StringIO.StringIO(text.decode("utf-8"))
-        list_ = []
+        output_list = []
         dict_reader = csv.DictReader(f, quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True, dialect='excel')
         for item in dict_reader:
-            list_.append(item)
+            output_list.append(item)
 
-        return list_
+        return output_list
 
     def run(self, terms, variables=None, **kwargs):
         conf = {
@@ -53,12 +53,12 @@ class LookupModule(LookupBase):
         else:
             raise AnsibleError("No password found for user: %s and device: %s" % (username, device))
 
-    def runDoql(self, conf, query, header):
+    def runDoql(self, conf, query, output_type):
         url = conf['D42_URL'] + "/services/data/v1.0/query/"
 
         post_data = {
             "query": query.replace("@", "'"),
-            "header": 'yes' if header else 'no'
+            "header": 'yes' if output_type == 'list_dicts' else 'no'
         }
 
         resp = requests.request("POST",
@@ -72,7 +72,9 @@ class LookupModule(LookupBase):
         if not resp.text:
             pass
 
-        if not header:
+        if output_type == 'string':
             return [resp.text,]
+        elif output_type == 'list':
+            return resp.text.split('\n')
 
         return self.get_list_from_csv(resp.text)

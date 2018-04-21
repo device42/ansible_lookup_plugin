@@ -27,6 +27,9 @@ To get password call: lookup('d42', 'device_name', 'password', 'username')
 ```
 device_name and username need to be filled in
 ```
-To run any doql request: lookup('d42', 'SELECT ... FROM ...', 'doql', False)
+To run any doql request: lookup('d42', 'SELECT ... FROM ...', 'doql', 'list')
 ```
-doql query need to be filled in + last boolean argument should add headers to the doql if True and show just plain csv result if False
+doql query need to be filled in + we need to set data type of returned result ( 'string', 'list', 'list_dicts' )
+* string - return single string without column headers
+* list - return list of string ( we split DOQL result line by line without column headers )
+* list_dicts - return list of dicts with column headers
