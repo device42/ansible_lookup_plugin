@@ -34,6 +34,9 @@ class LookupModule(LookupBase):
         for item in dict_reader:
             output_list.append(item)
 
+        if len(output_list) == 1:
+            output_list = [output_list,]
+
         return output_list
 
     def run(self, terms, variables=None, **kwargs):
