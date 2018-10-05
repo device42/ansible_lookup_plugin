@@ -89,7 +89,7 @@ class LookupModule(LookupBase):
             raise AnsibleError("API Call failed with status code: " + resp.status_code)
 
         if output_type == 'string':
-            return [resp.text,]
+            return [resp.text.replace('\n', ''),]
         elif output_type == 'list':
             return resp.text.split('\n')
 
