@@ -9,7 +9,7 @@ This lookup plugin allows a playbook to fetch passwords or ip addresses for host
 
 ## Configuration
 
-Please set system environment variables:
+Please set system environment variables if you use ENV version ( d42.py ):
 ```
 D42_USER = 'device42 user'
 D42_PWD = 'device42 password'
@@ -18,7 +18,7 @@ D42_SKIP_SSL_CHECK = False
 ```
 
 ```
-* Place d42.py in ansible/lib/ansible/plugins/lookup/
+* Place d42.py or d42_prompt.py in ansible/lib/ansible/plugins/lookup/
 ```
 
 ## Usage
@@ -34,3 +34,5 @@ doql query need to be filled in + we need to set data type of returned result ( 
 * string - return single string without column headers
 * list - return list of string ( we split DOQL result line by line without column headers )
 * list_dicts - return list of dicts with column headers
+
+All above works the same for the `prompt` version, we just add 3 more arguments in the yaml file, please check reference in promt example.
