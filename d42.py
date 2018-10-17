@@ -58,7 +58,7 @@ class LookupModule(LookupBase):
                                 verify=False)
 
         if resp.status_code != 200:
-            raise AnsibleError("API Call failed with status code: " + resp.status_code)
+            raise AnsibleError("API Call failed with status code: " + str(resp.status_code))
         if not resp.text:
             raise AnsibleError("Something went wrong!")
 
@@ -86,7 +86,7 @@ class LookupModule(LookupBase):
                                 verify=False)
 
         if resp.status_code != 200:
-            raise AnsibleError("API Call failed with status code: " + resp.status_code)
+            raise AnsibleError("API Call failed with status code: " + str(resp.status_code))
 
         if output_type == 'string':
             return [resp.text.replace('\n', ''),]
